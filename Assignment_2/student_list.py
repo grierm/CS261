@@ -61,17 +61,17 @@ class StudentList:
             new = np.empty([self._capacity], np.int16)
             i = 0
             for value in self._list:
-                if value != self._list[self._size-1]:
+                if value != self._list[self._size - 1]:
                     new[i] = value
                     i += 1
-                elif value == self._list[self._size-1]:
+                elif value == self._list[self._size - 1]:
                     self._list = new
                     # return self._list
         self._size -= 1
 
     def insert(self, index, value):
         # Given
-        last = self._list[self._size-1]
+        last = self._list[self._size - 1]
         if self._size == self._capacity:
             self.re_size()
         if index >= self._size:
@@ -79,7 +79,7 @@ class StudentList:
         else:
             self._list[self._size] = self._list[self._size - 1]
             for i in range(self._size, index, -1):
-                self._list[i] = self._list[i-1]
+                self._list[i] = self._list[i - 1]
             self._list[index] = value
         self._size += 1
 
@@ -90,18 +90,21 @@ class StudentList:
         :param remove_value: Value to be removed.
         :return: Nothing
         """
-        if remove_value not in self._list:
-            raise ValueError('list.remove(x): x not in list')
-        index = 0
-        remove_index = None
-        for list_value in self._list:
-            if list_value == remove_value:
-                remove_index = index
-                break
-            index += 1
-        for index2 in range(remove_index, self._size):
-            self._list[index2] = self._list[index2 + 1]
-        self._size -= 1
+        # if remove_value not in self._list:
+        #     raise ValueError('list.remove(x): x not in list')
+        if self._size > 0:
+            index = 0
+            remove_index = None
+            for list_value in self._list:
+                if list_value == remove_value:
+                    remove_index = index
+                    break
+                index += 1
+            if remove_index is not None:
+                for index2 in range(remove_index, self._size - 1):
+                    self._list[index2] = self._list[index2 + 1]
+                self._size -= 1
+            print(self._size)
 
     def clear(self):
         # Given
@@ -122,15 +125,8 @@ class StudentList:
 
     def get(self, index):
         # Given
-        return self._list[index]
-
-
-
-
-
-
-
-
+        if index <= self._size:
+            return self._list[index]
 
         # print("before", self._list)
         # popped_value = self._list[index]
@@ -159,18 +155,18 @@ class StudentList:
         # return popped_value
 
 
-
-my_list = StudentList()
-print("My empty numpy", my_list)
-for i in range(10):
-    my_list.append(i)
-my_list.append(5)
-print("numpy with values", my_list)
-
-
-print(my_list.get(10))
-
-
+# my_list = StudentList()
+# print("My empty numpy", my_list)
+# for i in range(4):
+#     my_list.append(i)
+# print("numpy with values", my_list)
+#
+# my_list.remove(0)
+# my_list.remove(1)
+# my_list.remove(2)
+# my_list.remove(3)
+# my_list.remove(3)
+# print(my_list)
 
 # start2 = time.time()
 # my_list = [x for x in range(100)]
