@@ -10,50 +10,47 @@ import sys
 # param: input string
 # returns True if string is balanced, otherwise returns False
 def is_balanced(input_string):
-    alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-                "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-    parenthesis = ["(", ")"]
-    braces = ["{", "}"]
-    brackets = ["[", "]"]
+    """
+    This will check if the input_string has matching opening and closing symbols,
+    which would make it balanced.
+    :param input_string: String to be checked.
+    :return: True or False depending if it is balanced or not.
+    """
+
+    # Set opening and closing symbols
+    open_symbols = ["(", "[", "{"]
+    close_symbols = [")", "]", "}"]
+
     # initialize an empty list as the stack
     stack = []
 
-    reverse_stack = []
-    # iterate over each character in the string
-    # FIXME: You will write this function ok i will
-    for i in input_string:
-        if i not in alphabet:
-            stack.append(i)
-    reverse_stack = stack[::-1]
-    is_balanced = True
-    i = 0
-    for item in stack:
-        if item in parenthesis:
-            if item == parenthesis[0]:
-                if reverse_stack[i] != parenthesis[1]:
-                    is_balanced = False
-            elif item == parenthesis[1]:
-                if reverse_stack[i] != parenthesis[0]:
-                    is_balanced = False
-        if item in braces:
-            if item == braces[0]:
-                if reverse_stack[i] != braces[1]:
-                    is_balanced = False
-            elif item == braces[1]:
-                if reverse_stack[i] != braces[0]:
-                    is_balanced = False
-        if item in brackets:
-            if item == brackets[0]:
-                if reverse_stack[i] != brackets[1]:
-                    is_balanced = False
-            elif item == brackets[1]:
-                if reverse_stack[i] != brackets[0]:
-                    is_balanced = False
-        i += 1
-    return is_balanced
+    # initializes balanced to False
+    balanced = False
 
+    # If the string is empty, it will be considered balanced
+    if input_string == "":
+        balanced = True
+
+    # Iterates through every symbol in the input_string
+    # FIXME: You will write this function
+    for symbol in input_string:
+
+        # Add an open symbol to the stack
+        if symbol in open_symbols:
+            stack.append(symbol)
+
+        # If it's a closing symbol, checks if it's a match, then removes it from the stack
+        elif symbol in close_symbols:
+            position = close_symbols.index(symbol)
+            if len(stack) > 0 and open_symbols[position] == stack[len(stack) - 1]:
+                stack.pop()
+
+        # If all opening symbols had a correctly positioned closing symbol,
+        # the length of the stack is 0, which means it's balanced
+        if len(stack) == 0:
+            balanced = True
+
+    return balanced
 
 if __name__ == '__main__':
     # get input string
